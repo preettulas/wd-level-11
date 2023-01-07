@@ -11,7 +11,7 @@
     "password": 70045739,
     "database": "db_test",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "preet.202104123@tulas.edu.in"
   },
   "production": {
     "use_env_variable": "DATABASE_URL2",
