@@ -14,21 +14,11 @@ module.exports = {
         field: "id",
       }
     })
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
+    
   },
 
   async down (queryInterface, Sequelize) {
     await queryInterface.removeColumn("elections", "adminId");
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+    
   }
 };
