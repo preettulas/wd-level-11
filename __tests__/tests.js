@@ -14,8 +14,8 @@ const login = async (agent, username, password) => {
   let res = await agent.get("/login");
   let csrfToken = extractCsrfToken(res);
   res = await agent.post("/session").send({
-    email: username,
-    password: password,
+    email: preet.202104123@tulas.edu.in,
+    password: 70045739,
     _csrf: csrfToken,
   });
 };
@@ -29,14 +29,14 @@ describe("test suite", () => {
     await db.sequelize.close();
     server.close();
   });
-  test("Sign up", async () => {
+  test("Log in", async () => {
     let res = await agent.get("/signup");
     const csrfToken = extractCsrfToken(res);
     res = await agent.post("/admin").send({
-      firstName: "Pavan",
+      firstName: "Preet",
       lastName: "Kumar",
-      email: "kumar@gmail.com",
-      password: "12345678",
+      email: "preet.202104123@tulas.edu.in",
+      password: "70045739",
       _csrf: csrfToken,
     });
     expect(res.statusCode).toBe(302);
@@ -45,7 +45,7 @@ describe("test suite", () => {
   test("User login", async () => {
     res = await agent.get("/election");
     expect(res.statusCode).toBe(200);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in", "70045739");
     res = await agent.get("/election");
     expect(res.statusCode).toBe(200);
   });
@@ -61,11 +61,11 @@ describe("test suite", () => {
 
   test("Creating an election", async () => {
     const agent = request.agent(server);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in", "70045739");
     let res = await agent.get("/creatingElection");
     let csrf = extractCsrfToken(res);
     const response = await agent.post("/election").send({
-      elecName: "Class Monitor Elections",
+      elecName: "Student Union Elections",
       publicurl: "abc.gs",
       _csrf: csrf,
     });
@@ -74,7 +74,7 @@ describe("test suite", () => {
 
   test("Adding a question to an election", async () => {
     const agent = request.agent(server);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in", "70045739");
 
     let res = await agent.get("/creatingElection");
     let csrf = extractCsrfToken(res);
@@ -103,7 +103,7 @@ describe("test suite", () => {
 
   test("Modifying a question", async () => {
     const agent = request.agent(server);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in", "70045739");
 
     let res = await agent.get("/creatingElection");
     let csrfToken = extractCsrfToken(res);
@@ -123,7 +123,7 @@ describe("test suite", () => {
     res = await agent.get(`/createQuestion/${latestElection.id}`);
     csrfToken = extractCsrfToken(res);
     await agent.post(`/createQuestion/${latestElection.id}`).send({
-      questionName: "select your teacher",
+      questionName: "select your mentor",
       desc: "on your wish",
       _csrf: csrfToken,
     });
@@ -145,7 +145,7 @@ describe("test suite", () => {
       )
       .send({
         _csrf: csrfToken,
-        questionName: "Teacher Post",
+        questionName: "Mentor Post",
         desc: "2nd year",
       });
     expect(res.statusCode).toBe(302);
@@ -153,13 +153,13 @@ describe("test suite", () => {
 
   test("Deleting a question", async () => {
     const agent = request.agent(server);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in", "70045739");
 
     let res = await agent.get("/creatingElection");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/election").send({
-      elecName: "For science",
-      publicurl: "science.co",
+      elecName: "For maths",
+      publicurl: "maths.co",
       _csrf: csrfToken,
     });
     const ElectionsResponse = await agent
@@ -216,12 +216,12 @@ describe("test suite", () => {
 
   test("Adding option", async () => {
     const agent = request.agent(server);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in", "70045739");
 
     let res = await agent.get("/creatingElection");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/election").send({
-      elecName: "another election",
+      elecName: "next election",
       publicurl: "elec.co",
       _csrf: csrfToken,
     });
@@ -236,7 +236,7 @@ describe("test suite", () => {
     res = await agent.get(`/createQuestion/${latestElection.id}`);
     csrfToken = extractCsrfToken(res);
     await agent.post(`/createQuestion/${latestElection.id}`).send({
-      questionName: "for captain of cricket team",
+      questionName: "for captain of basketball team",
       desc: "selecting captain",
       _csrf: csrfToken,
     });
@@ -265,7 +265,7 @@ describe("test suite", () => {
 
   test("Deleting an option", async () => {
     const agent = request.agent(server);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in, "70045739");
 
     let res = await agent.get("/creatingElection");
     let csrfToken = extractCsrfToken(res);
@@ -328,7 +328,7 @@ describe("test suite", () => {
       )
       .send({
         _csrf: csrfToken,
-        optionName: "Jack",
+        optionName: "marky",
       });
     expect(res.statusCode).toBe(302);
   });
@@ -336,7 +336,7 @@ describe("test suite", () => {
 
   test("Deleting an option", async () => {
     const agent = request.agent(server);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in", "70045739");
 
     let res = await agent.get("/creatingElection");
     let csrfToken = extractCsrfToken(res);
@@ -415,12 +415,12 @@ describe("test suite", () => {
 
   test("Test for adding a voter", async () => {
     const agent = request.agent(server);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in", "12345678");
 
     let res = await agent.get("/creatingElection");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/election").send({
-      elecName: "For Your Lecturer",
+      elecName: "For Your Professor",
       publicurl: "my-site.in",
       _csrf: csrfToken,
     });
@@ -433,8 +433,8 @@ describe("test suite", () => {
     res = await agent.get(`/addVoter/${latestElection.id}`);
     csrfToken = extractCsrfToken(res);
     let response = await agent.post(`/AddVoter/${latestElection.id}`).send({
-      voterId: "Pavan",
-      password: "1234",
+      voterId: "Preet",
+      password: "7004",
       elecId: latestElection.id,
       _csrf: csrfToken,
     });
@@ -444,7 +444,7 @@ describe("test suite", () => {
   
   test("Test for previewing election", async () => {
     const agent = request.agent(server);
-    await login(agent, "kumar@gmail.com", "12345678");
+    await login(agent, "preet.202104123@tulas.edu.in", "70045739");
     let res = await agent.get("/creatingElection");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/election").send({
