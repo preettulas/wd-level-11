@@ -45,10 +45,10 @@
                 <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                     <div class="bg-black-600 px-3 py-1 gap-2 justify-center hover:bgblack-600">
                         <a href="/elecs/<%=id%>"
-                            class="text-white bg-red-600 hover:bg-red-800 font-medium rounded px-5 py-2 justify-right">Go
+                            class="text-white bg-red-600 hover:bg-red-700 font-medium rounded px-5 py-2 justify-right">Go
                             Back</a>
                         <a href="/addVoter/<%=id%>"
-                            class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2">Add New
+                            class="text-white bg-green-600 hover:bg-green-900 font-medium rounded px-5 py-2">Add New
                             Voter</a>
                     </div>
                     <br>
@@ -74,14 +74,14 @@
                                                     class="rounded w-fit px-2 py-1 flex gap-2 hover:text-600">
 
                                                     <a href="/election/<%=election.id%>/voter/<%=voters[i].id%>/edit"
-                                                        class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-3 py-1.5">Edit
+                                                        class="text-white bg-green-600 hover:bg-green-900 font-medium rounded px-3 py-1.5">Edit
                                                     </a>
                                                 </div>
                                                 <% if((voters.length)>1) {%>
                                                     <div
                                                         class="rounded w-fit px-2 py-1 flex gap-2 cursor-pointer hover:text-600">
                                                         <a onclick="deleteVoter(<%= voters[i].id %>)"
-                                                            class="text-white bg-red-600 hover:bg-red-800 font-medium rounded px-3 py-1.5">Delete</a>
+                                                            class="text-white bg-red-600 hover:bg-red-700 font-medium rounded px-3 py-1.5">Delete</a>
                                                         <%} %>
 
                                                     </div>
