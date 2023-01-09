@@ -19,15 +19,15 @@
           <div class="py-3">
             <label for="password">New Password:</label>
             <input type="text" name="password" value="<%=voter.password%>" placeholder="New Password"
-              class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+              class="border border-gray-300 text-gray-800 rounded p-2 w-full">
           </div>
           <div class="py-3">
             <button type="submit"
-              class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2">Update</button>
+              class="text-white bg-green-600 hover:bg-green-900 font-medium rounded px-5 py-2">Update</button>
           </div>
           <div class="py-3">
             <a href="/voters/<%=election.id%>"
-              class="text-white bg-red-600 hover:bg-red-800 font-medium rounded px-5 py-2">Cancel</a>
+              class="text-white bg-red-600 hover:bg-red-700 font-medium rounded px-5 py-2">Cancel</a>
           </div>
         </form>
         <% if(messages && messages.error && messages.error.length> 0) { %>
