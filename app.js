@@ -22,9 +22,9 @@ app.use(cookieParser("shh! some secret string"));
 app.use(csrf("this_should_be_32_character_long", ["POST", "PUT", "DELETE"]));
 
 app.set("view engine", "ejs");
-// eslint-disable-next-line no-undef
+
 app.set("views", path.join(__dirname, "views"));
-// eslint-disable-next-line no-undef
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
@@ -59,7 +59,7 @@ passport.use(
           if (result) {
             return done(null, user);
           } else {
-            return done(null, false, { message: "Invalid Password" });
+            return done(null, false, { message: "Wrong Password" });
           }
         })
         .catch((error) => {
@@ -84,12 +84,12 @@ passport.use(
           if (result) {
             return done(null, user);
           } else {
-            return done(null, false, { message: "Invalid Password" });
+            return done(null, false, { message: "Wrong Password" });
           }
         })
         .catch(() => {
           return done(null, false, {
-            message: "Id is not valid",
+            message: "Id is not correct",
           });
         });
     }
@@ -152,7 +152,7 @@ app.get(
 //for signup
 app.get("/signup", (request, response) => {
   try {
-    response.render("signup", {
+    response.render("login", {
       title: "Create an account",
       csrfToken: request.csrfToken(),
     });
@@ -162,7 +162,7 @@ app.get("/signup", (request, response) => {
 });
 
 //for signout
-app.get("/signout", (request, response, next) => {
+app.get("/logout", (request, response, next) => {
   request.logout((err) => {
     if (err) {
       return next(err);
@@ -194,19 +194,19 @@ app.post(
 
 app.post("/admin", async (request, response) => {
   if (request.body.email.length == 0) {
-    request.flash("error", "Email can,t be empty! Try entering mail address.");
-    return response.redirect("/signup");
+    request.flash("error", "Email can,t be vacant! Try entering mail address.");
+    return response.redirect("/login");
   }
   if (request.body.firstName.length == 0) {
     request.flash(
       "error",
-      "First name cannot be empty! Try entering your name"
+      "First name cannot be vacant! Try entering your name"
     );
-    return response.redirect("/signup");
+    return response.redirect("/login");
   }
   if (request.body.password.length < 8) {
     request.flash("error", "Password length should be minimun of 8 characters");
-    return response.redirect("/signup");
+    return response.redirect("/login");
   }
   const hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
   try {
@@ -226,7 +226,7 @@ app.post("/admin", async (request, response) => {
     });
   } catch (error) {
     console.log(error);
-    request.flash("error", "This mail is already used.");
+    request.flash("error", "This mail is before used.");
     return response.redirect("/signup");
   }
 });
@@ -295,7 +295,7 @@ app.post(
         });
         return response.redirect("/election");
       } catch (error) {
-        request.flash("error", "This URL is already taken,try with a new one.");
+        request.flash("error", "This URL is before taken,try with a new one.");
         return response.redirect("/creatingElection");
       }
     } else if (request.user.role === "voter") {
@@ -341,13 +341,12 @@ app.get(
   }
 );
 
-//getting questions
 app.get(
   "/questions/:id",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     if (request.user.case === "admin") {
-      // eslint-disable-next-line no-unused-vars
+      
       const allElections = await election.getElections(
         request.params.id,
         request.user.id
@@ -355,7 +354,7 @@ app.get(
       const anyQuestion = await question.getQuestions(request.params.id);
       const elections = await election.findByPk(request.params.id);
       if (election.launched) {
-        request.flash("error", "Election is running,can't modify a question ");
+        request.flash("error", "Election is ongoing,can't modify a question ");
         return response.redirect(`allElections/${request.params.id}`);
       }
       if (request.accepts("html")) {
@@ -373,7 +372,7 @@ app.get(
   }
 );
 
-//creating a question
+
 app.get(
   "/createQuestion/:id",
   connectEnsureLogin.ensureLoggedIn(),
@@ -392,11 +391,11 @@ app.post(
   async (request, response) => {
     if (request.user.case === "admin") {
       if (!request.body.questionName) {
-        request.flash("error", "Question must be created");
+        request.flash("error", "Question must be generate");
         return response.redirect(`/createQuestion/${request.params.id}`);
       }
       try {
-        // eslint-disable-next-line no-unused-vars
+        
         const questions = await question.addQuestions({
           elecId: request.params.id,
           questionName: request.body.questionName,
@@ -413,7 +412,7 @@ app.post(
   }
 );
 
-//editing question
+
 app.get(
   "/election/:elecId/questions/:questionId/edit",
   connectEnsureLogin.ensureLoggedIn(),
@@ -452,7 +451,7 @@ app.post(
   }
 );
 
-//deleting question
+
 app.delete(
   "/deletequestion/:id",
   connectEnsureLogin.ensureLoggedIn(),
@@ -469,7 +468,7 @@ app.delete(
   }
 );
 
-//getting options
+
 app.get(
   "/getElections/addingOption/:id/:questionId/options",
   connectEnsureLogin.ensureLoggedIn(),
@@ -506,14 +505,14 @@ app.post(
   async (request, response) => {
     if (request.user.case === "admin") {
       if (!request.body.optionName) {
-        request.flash("error", "Option must be given a name");
+        request.flash("error", "Choice must be given a name");
         return response.redirect(
           `/getElections/addingOption/${request.params.id}/${request.params.questionId}/options`
         );
       }
       try {
         await options.addingOption({
-          optionName: request.body.optionName,
+          choiceName: request.body.choiceName,
           questionId: request.params.questionId,
         });
         return response.redirect(
@@ -527,7 +526,7 @@ app.post(
   }
 );
 
-//updating option
+
 app.get(
   "/election/:elecId/questions/:questionId/options/:id/edit",
   connectEnsureLogin.ensureLoggedIn(),
@@ -567,7 +566,7 @@ app.post(
   }
 );
 
-//deleting option
+
 app.delete(
   "/:id/deleteOption",
   connectEnsureLogin.ensureLoggedIn(),
@@ -584,13 +583,11 @@ app.delete(
   }
 );
 
-//get voters
 app.get(
   "/voters/:id",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     if (request.user.case === "admin") {
-      // eslint-disable-next-line no-unused-vars
       const allElections = await election.getElections(
         request.params.id,
         request.user.id
@@ -613,9 +610,6 @@ app.get(
     }
   }
 );
-// app.post("")
-
-// adding voter
 app.get(
   "/addVoter/:id",
   connectEnsureLogin.ensureLoggedIn(),
@@ -650,20 +644,17 @@ app.post(
         request.flash("error", "Password length can't be less than 4!");
         return response.redirect(`/addVoter/${request.params.id}`);
       }
-      // const hashedPwd = await bcrypt.hash(request.body.password, saltRounds);
       try {
         await voters.addVoters(request.body.voterId, request.params.id);
         return response.redirect(`/voters/${request.params.id}`);
       } catch (error) {
         console.log(error);
-        request.flash("error", "Voter Id already used, try another!");
+        request.flash("error", "Voter Id before used, try another!");
         return response.redirect(`/addVoter/${request.params.id}`);
       }
     }
   }
 );
-
-//edit voterId
 app.get(
   "/election/:elecId/voter/:voterId/edit",
   connectEnsureLogin.ensureLoggedIn(),
@@ -695,7 +686,6 @@ app.post(
   }
 );
 
-//delete voter
 app.delete(
   "/:id/deleteVoter",
   connectEnsureLogin.ensureLoggedIn(),
@@ -711,8 +701,6 @@ app.delete(
     }
   }
 );
-
-//launching an election
 app.get(
   "/election/:id/start",
   connectEnsureLogin.ensureLoggedIn(),
@@ -755,21 +743,7 @@ app.get(
   }
 );
 
-//public url
-// app.get("/externalpage/:publicurl", async (request, response) => {
-//   try {
-//     const election = await election.getElecURL(request.params.publicurl);
-//     return response.render("loginvoter", {
-//       publicurl: election.publicurl,
-//       csrfToken: request.csrfToken(),
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     return response.status(422).json(error);
-//   }
-// });
 
-//preview election
 app.get(
   "/election/:id/sampleElection",
   connectEnsureLogin.ensureLoggedIn(),
@@ -784,7 +758,7 @@ app.get(
         optionStack.push(allOptions);
       }
       if (findElection.start) {
-        request.flash("error", "You can not preview election while Running");
+        request.flash("error", "You can not show election while Ongoing");
         return response.redirect(`/elecs/${request.params.id}`);
       }
 
