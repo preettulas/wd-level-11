@@ -47,7 +47,7 @@
         <div>
             <b>
                 <a href="/questions/<%= id%>"
-                    class="text-white bg-red-600 hover:bg-red-800 font-medium rounded px-5 py-2 justify-right">Go
+                    class="text-white bg-red-600 hover:bg-red-700 font-medium rounded px-5 py-2 justify-right">Go
                     Back</a>
             </b>
         </div>
@@ -76,7 +76,7 @@
                                                     <div class="rounded w-fit px-2 justify-right py-1 flex gap-2">
 
                                                         <a onclick="deleteOption(<%= option[i].id %>)"
-                                                            class="text-white bg-red-600 hover:bg-red-800 font-medium rounded px-3 py-1.5 justify-right">Delete</a>
+                                                            class="text-white bg-red-600 hover:bg-red-700 font-medium rounded px-3 py-1.5 justify-right">Delete</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -88,11 +88,11 @@
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <div class="py-3">
                                     <input type="text" name="optionName" placeholder="Enter an option"
-                                        class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                                        class="border border-gray-300 text-gray-800 rounded p-2 w-full">
                                 </div>
                                 <div class="py-3">
                                     <button type="submit"
-                                        class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2">Add
+                                        class="text-white bg-green-600 hover:bg-green-900 font-medium rounded px-5 py-2">Add
                                         Option</button>
                                 </div>
                             </form>
