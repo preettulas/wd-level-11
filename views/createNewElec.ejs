@@ -16,7 +16,7 @@
     <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center   px-2">
       <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
         <h1 class="mb-8 text-3xl text-left"> Create New Election</h1>
-        <a href="/election" class="bg-red-600 hover:bg-red-800 text-white px-5 py-2 rounded font-medium-bold border-gray-300">Back</a><br>
+        <a href="/election" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded font-medium-bold border-gray-300">Back</a><br>
 
         <form action="/election" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -29,7 +29,7 @@
             <input id="publicurl" name="publicurl" type="text" placeholder="URL" class="block border border-gray-light w-full p-2 rounded mb-3">
           </div>
           <div class="py-3">
-            <button type="submit" class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2">Create</button>
+            <button type="submit" class="text-white bg-green-600 hover:bg-green-900 font-medium rounded px-5 py-2">Create</button>
           </div>
         </form>
         <% if(messages && messages.error && messages.error.length> 0) { %>
